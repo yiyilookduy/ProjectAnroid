@@ -1,0 +1,10 @@
+C:\Users\PhongND20\Downloads\FaceDetector\FaceDetector\bin\Release\netcoreapp2.1\FaceDetector.deps.json
+C:\Users\PhongND20\Downloads\FaceDetector\FaceDetector\bin\Release\netcoreapp2.1\FaceDetector.runtimeconfig.json
+C:\Users\PhongND20\Downloads\FaceDetector\FaceDetector\bin\Release\netcoreapp2.1\FaceDetector.runtimeconfig.dev.json
+C:\Users\PhongND20\Downloads\FaceDetector\FaceDetector\bin\Release\netcoreapp2.1\FaceDetector.dll
+C:\Users\PhongND20\Downloads\FaceDetector\FaceDetector\bin\Release\netcoreapp2.1\FaceDetector.pdb
+C:\Users\PhongND20\Downloads\FaceDetector\FaceDetector\obj\Release\netcoreapp2.1\FaceDetector.csprojAssemblyReference.cache
+C:\Users\PhongND20\Downloads\FaceDetector\FaceDetector\obj\Release\netcoreapp2.1\FaceDetector.AssemblyInfoInputs.cache
+C:\Users\PhongND20\Downloads\FaceDetector\FaceDetector\obj\Release\netcoreapp2.1\FaceDetector.AssemblyInfo.cs
+C:\Users\PhongND20\Downloads\FaceDetector\FaceDetector\obj\Release\netcoreapp2.1\FaceDetector.dll
+C:\Users\PhongND20\Downloads\FaceDetector\FaceDetector\obj\Release\netcoreapp2.1\FaceDetector.pdb

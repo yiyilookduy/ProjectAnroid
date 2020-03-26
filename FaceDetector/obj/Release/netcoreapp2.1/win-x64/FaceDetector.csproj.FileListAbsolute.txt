@@ -1,0 +1,13 @@
+C:\Users\PhongND20\Downloads\FaceDetector\FaceDetector\bin\Release\netcoreapp2.1\win-x64\hostpolicy.dll
+C:\Users\PhongND20\Downloads\FaceDetector\FaceDetector\bin\Release\netcoreapp2.1\win-x64\hostfxr.dll
+C:\Users\PhongND20\Downloads\FaceDetector\FaceDetector\bin\Release\netcoreapp2.1\win-x64\FaceDetector.exe
+C:\Users\PhongND20\Downloads\FaceDetector\FaceDetector\bin\Release\netcoreapp2.1\win-x64\FaceDetector.deps.json
+C:\Users\PhongND20\Downloads\FaceDetector\FaceDetector\bin\Release\netcoreapp2.1\win-x64\FaceDetector.runtimeconfig.json
+C:\Users\PhongND20\Downloads\FaceDetector\FaceDetector\bin\Release\netcoreapp2.1\win-x64\FaceDetector.runtimeconfig.dev.json
+C:\Users\PhongND20\Downloads\FaceDetector\FaceDetector\bin\Release\netcoreapp2.1\win-x64\FaceDetector.dll
+C:\Users\PhongND20\Downloads\FaceDetector\FaceDetector\bin\Release\netcoreapp2.1\win-x64\FaceDetector.pdb
+C:\Users\PhongND20\Downloads\FaceDetector\FaceDetector\obj\Release\netcoreapp2.1\win-x64\FaceDetector.csprojAssemblyReference.cache
+C:\Users\PhongND20\Downloads\FaceDetector\FaceDetector\obj\Release\netcoreapp2.1\win-x64\FaceDetector.AssemblyInfoInputs.cache
+C:\Users\PhongND20\Downloads\FaceDetector\FaceDetector\obj\Release\netcoreapp2.1\win-x64\FaceDetector.AssemblyInfo.cs
+C:\Users\PhongND20\Downloads\FaceDetector\FaceDetector\obj\Release\netcoreapp2.1\win-x64\FaceDetector.dll
+C:\Users\PhongND20\Downloads\FaceDetector\FaceDetector\obj\Release\netcoreapp2.1\win-x64\FaceDetector.pdb
