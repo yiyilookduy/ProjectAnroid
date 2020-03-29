@@ -14,6 +14,8 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.Objects;
+
 import dto.Student;
 import dto.Teacher;
 import okhttp3.MultipartBody;
@@ -85,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
 
             try {
                 Response response = okHttpClient.newCall(request).execute();
-                return response.body().string();
+                return Objects.requireNonNull(response.body()).string();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -97,21 +99,19 @@ public class MainActivity extends AppCompatActivity {
             Log.d("JsonData",s);
             super.onPostExecute(s);
             readJsonLoginData(s);
-//            Boolean isAllow = valid.userLoginValidate(user,student.getUsername(),password, student.getPassword());
-            if(student == null&&teacher == null){
-                edtUser.getText().clear();
-                edtPass.getText().clear();
-            }else if(student.getRoleId() == 2 && valid.userLoginValidate(user,student.getUsername(),password, student.getPassword())==true){
-                startActivity(sIntent);
-            }else if(teacher.getRoleId() == 1 && valid.userLoginValidate(user,teacher.getUsername(),password, teacher.getPassword())==true){
-                startActivity(tIntent);
+            if(student != null &&teacher != null){
+                if(student.getRoleId() == 2 && valid.userLoginValidate(user, student.getUsername(), password, student.getPassword())){
+                    startActivity(sIntent);
+                }else if(teacher.getRoleId() == 1 && valid.userLoginValidate(user, teacher.getUsername(), password, teacher.getPassword())){
+                    startActivity(tIntent);
+                }
             }else{
                 edtUser.getText().clear();
                 edtPass.getText().clear();
             }
         }
 
-        public void readJsonLoginData(String userData){
+        private void readJsonLoginData(String userData){
             try {
                 JSONObject jsonObject = new JSONObject(userData);
                 String userInfo = jsonObject.getString("Data");
@@ -137,29 +137,4 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
-
-//    public void clickToLogin(View view) throws IOException {
-//        Intent sIntent = new Intent(this, studentActivity.class);
-//        Intent tIntent = new Intent(this, teacherActivity.class);
-//
-//
-//
-//        String username = user.getText().toString();
-//        String password = pass.getText().toString();
-//
-//        jsm.readJsonLoginData(api.Login(username,password));
-//        Boolean isAllow = valid.userLoginValidate(username,student.getUsername(),password, student.getPassword());
-//
-//        if(student.getRoleId() == 1 && isAllow== true){
-//            startActivity(sIntent);
-//            Toast.makeText(this,"Login as student",Toast.LENGTH_LONG).show();
-//        }else if(teacher.getRoleId() == 2 && isAllow == true){
-//            startActivity(tIntent);
-//            Toast.makeText(this,"Login as Teacher",Toast.LENGTH_LONG).show();
-//        }else{
-//            user.getText().clear();
-//            pass.getText().clear();
-//            Toast.makeText(this,"Login failed",Toast.LENGTH_LONG).show();
-//        }
-//    }
 }
