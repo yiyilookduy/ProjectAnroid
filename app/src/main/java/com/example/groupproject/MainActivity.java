@@ -2,6 +2,7 @@ package com.example.groupproject;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -9,6 +10,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+
+import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -31,13 +34,11 @@ public class MainActivity extends AppCompatActivity {
     private int roleIdJsonData = 0;
     private Boolean activeJsonData = false;
     validate valid = new validate();
-    JSONManipulator jsm = new JSONManipulator();
     Student student = null;
     Teacher teacher = null;
-    EditText edtUser,edtPass;;
+    EditText edtUser,edtPass;
     Button btnLogin;
-    Intent sIntent;
-    Intent tIntent;
+    Intent sIntent,tIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,16 +61,17 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String User = edtUser.getText().toString().trim();
                 String Pass = edtPass.getText().toString().trim();
-                new PostToServer(User,Pass).execute("http://171.245.197.16:8080/Home/Login");
+                new PostLoginToServer(User,Pass).execute("http://171.245.197.16:8080/Home/Login");
             }
         });
     }
 
-    class PostToServer extends AsyncTask<String,Void,String> {
+    @SuppressLint("StaticFieldLeak")
+    class PostLoginToServer extends AsyncTask<String,Void,String> {
         OkHttpClient okHttpClient = new OkHttpClient.Builder().build();
         String user,password;
 
-        public PostToServer(String user, String password) {
+        private PostLoginToServer(String user, String password) {
             this.user = user;
             this.password = password;
         }
@@ -99,10 +101,16 @@ public class MainActivity extends AppCompatActivity {
             Log.d("JsonData",s);
             super.onPostExecute(s);
             readJsonLoginData(s);
-            if(student != null &&teacher != null){
+            if(student != null || teacher != null){
                 if(student.getRoleId() == 2 && valid.userLoginValidate(user, student.getUsername(), password, student.getPassword())){
+                    student.setPassword("");
+                    String username = student.getUsername();
+                    sIntent.putExtra("studentDataObjectAsAString",username);
                     startActivity(sIntent);
                 }else if(teacher.getRoleId() == 1 && valid.userLoginValidate(user, teacher.getUsername(), password, teacher.getPassword())){
+                    student.setPassword("");
+                    String username = teacher.getUsername();
+                    tIntent.putExtra("TeacherObjectData",username);
                     startActivity(tIntent);
                 }
             }else{
