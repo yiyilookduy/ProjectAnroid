@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import com.google.gson.Gson;
+
 public class studentActivity extends AppCompatActivity {
 
     @Override
@@ -16,16 +18,22 @@ public class studentActivity extends AppCompatActivity {
 
     public void clickToCheckAttendance(View view){
         Intent intent = new Intent(this,studentCheckAttendanceActivity.class);
+        String username = getIntent().getStringExtra("username");
+        intent.putExtra("username",username);
         startActivity(intent);
     }
 
     public void clickToCreateTicket(View view){
         Intent intent = new Intent(this,studentCreateTicketActivity.class);
+        String username = getIntent().getStringExtra("username");
+        intent.putExtra("username",username);
         startActivity(intent);
     }
 
     public void clickToTrackingTicket(View view){
         Intent intent = new Intent(this,studentTrackingTicketActivity.class);
+        String username = getIntent().getStringExtra("username");
+        intent.putExtra("username",username);
         startActivity(intent);
     }
 }
