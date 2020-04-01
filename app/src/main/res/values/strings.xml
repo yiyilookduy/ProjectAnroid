@@ -25,4 +25,10 @@
     <string name="slot_6">Slot 6</string>
     <string name="slot_7">Slot 7</string>
     <string name="slot_8">Slot 8</string>
+    <string name="check_attendance">Check Attendance</string>
+    <string name="create_ticket">Create Ticket</string>
+    <string name="checking_ticket">Checking Ticket</string>
+    <string name="teacher_id">Teacher Id</string>
+    <string name="message">Message</string>
+    <string name="create_a_ticket">Create A Ticket</string>
 </resources>
