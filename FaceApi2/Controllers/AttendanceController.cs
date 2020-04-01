@@ -22,15 +22,15 @@ namespace FaceApi2.Controllers
 
             DateTime ed = new DateTime(2020,03,17);
 
-            var ks = ed.StartOfWeek(DayOfWeek.Monday);
+            var mondayInWeek = DateTime.Now.StartOfWeek(DayOfWeek.Monday);
 
-            var se = ks.AddDays(6.0);
+            var sundayInWeek = mondayInWeek.AddDays(6.0);
 
             foreach (var classSubject in listClassSubject)
             {
                 var ds = GetScheduleByClassSubjectId(classSubject.Id);
 
-                var scheduleOfClassSubject = GetScheduleByClassSubjectId(classSubject.Id).Where(x => x.Date >= ks && x.Date <= se).ToList();
+                var scheduleOfClassSubject = GetScheduleByClassSubjectId(classSubject.Id).Where(x => x.Date >= mondayInWeek && x.Date <= sundayInWeek).ToList();
 
                  foreach (var schedule in scheduleOfClassSubject)
                 {
@@ -55,7 +55,58 @@ namespace FaceApi2.Controllers
 
         }
 
+        /// <summary>
+        /// Get Schedule on week by Student Id and Date
+        /// </summary>
+        /// <param name="studentId">Student ID of student</param>
+        /// <param name="date">What date you want query, it will return a week contain of this date</param>
+        /// <returns>Return a dictionary of schedule with key is Date/Slot and Value is Subject Name, Class Name, Status of attendance</returns>
+        [HttpGet("/Attendance/GetScheduleOnWeek")]
+        public IActionResult GetScheduleOnWeek(string studentId, DateTime date)
+        {
+            var listClassSubject = GetClassSubjectByStudentId(studentId);
 
+            Dictionary<string, Object> dicClassSubjectSchedule = new Dictionary<string, object>();
+
+
+            var mondayInWeek = date.StartOfWeek(DayOfWeek.Monday);
+
+            var sundayInWeek = mondayInWeek.AddDays(6.0);
+
+            foreach (var classSubject in listClassSubject)
+            {
+                var ds = GetScheduleByClassSubjectId(classSubject.Id);
+
+                var scheduleOfClassSubject = GetScheduleByClassSubjectId(classSubject.Id).Where(x => x.Date >= mondayInWeek && x.Date <= sundayInWeek).ToList();
+
+                foreach (var schedule in scheduleOfClassSubject)
+                {
+                    string s = $"{schedule.Date.DayOfWeek.ToString()}/{schedule.Slot}";
+
+                    int a = schedule.ClassSubjectSchedule.ToList()[0].Id;
+
+                    var attendance = GetAttendance(studentId, schedule.ClassSubjectSchedule.ToList()[0].Id,
+                        classSubject.Id);
+
+                    dicClassSubjectSchedule.Add(s, new
+                    {
+                        subject = classSubject.SubjectId,
+                        classId = classSubject.ClassId,
+                        atten = attendance.Attendance
+                    });
+                }
+            }
+
+            return Ok(new BaseResponse(dicClassSubjectSchedule, "", true));
+
+
+        }
+
+        /// <summary>
+        /// Get subjects which studying by student
+        /// </summary>
+        /// <param name="studentId">Student ID</param>
+        /// <returns></returns>
         [HttpGet("/Attendance/GetStudentSubjectStudy")]
         public IActionResult GetStudentSubject(string studentId)
         {
