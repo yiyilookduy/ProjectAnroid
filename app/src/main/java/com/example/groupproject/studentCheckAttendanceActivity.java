@@ -16,15 +16,17 @@ public class studentCheckAttendanceActivity extends AppCompatActivity {
     private String userData = "";
     private String classID = "";
     private String subjectIDJson="";
-//    private Boolean successStatusJson;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student_check_attendance);
+        setTitle("Check Student Attendance");
         readFile("3subjects.json");
         readJSON(userData);
         TextView s1m = (TextView) findViewById(id.S1MON);
-        s1m.setText(subjectIDJson);
+        s1m.setText("");
+
     }
 
     private void readFile(String fileName){

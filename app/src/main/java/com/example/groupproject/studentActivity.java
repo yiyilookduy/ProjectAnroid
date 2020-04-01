@@ -12,6 +12,7 @@ public class studentActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student_page);
+        setTitle("Options");
     }
 
     public void clickToCheckAttendance(View view){

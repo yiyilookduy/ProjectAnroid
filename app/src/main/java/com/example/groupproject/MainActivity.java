@@ -11,8 +11,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.google.gson.Gson;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -44,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        setTitle("School Helper");
 
         edtUser = findViewById(R.id.edtUsername);
         edtPass = findViewById(R.id.edtPassword);
@@ -101,16 +100,16 @@ public class MainActivity extends AppCompatActivity {
             Log.d("JsonData",s);
             super.onPostExecute(s);
             readJsonLoginData(s);
-            if(student != null || teacher != null){
-                if(student.getRoleId() == 2 && valid.userLoginValidate(user, student.getUsername(), password, student.getPassword())){
+            if(student!= null || teacher!= null){
+                if(student.getRoleId() == 1 && valid.userLoginValidate(user, student.getUsername(), password, student.getPassword())){
                     student.setPassword("");
                     String username = student.getUsername();
-                    sIntent.putExtra("studentDataObjectAsAString",username);
+                    sIntent.putExtra("username",username);
                     startActivity(sIntent);
-                }else if(teacher.getRoleId() == 1 && valid.userLoginValidate(user, teacher.getUsername(), password, teacher.getPassword())){
+                }else if(teacher.getRoleId() == 2 && valid.userLoginValidate(user, teacher.getUsername(), password, teacher.getPassword())){
                     student.setPassword("");
                     String username = teacher.getUsername();
-                    tIntent.putExtra("TeacherObjectData",username);
+                    tIntent.putExtra("username",username);
                     startActivity(tIntent);
                 }
             }else{
@@ -133,9 +132,9 @@ public class MainActivity extends AppCompatActivity {
                     roleIdJsonData = Integer.parseInt(jsonPart.getString("roleId"));
                     activeJsonData = jsonPart.getBoolean("active");
                 }
-                if (roleIdJsonData == 1){
+                if (roleIdJsonData == 2){
                     teacher = new Teacher(usernameJsonData,passwordJsonData,roleIdJsonData,activeJsonData);
-                }else if (roleIdJsonData == 2){
+                }else if (roleIdJsonData == 1){
                     student = new Student(usernameJsonData,passwordJsonData,roleIdJsonData,activeJsonData);
                 }else {
 

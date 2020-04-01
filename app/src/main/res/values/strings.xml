@@ -31,4 +31,5 @@
     <string name="teacher_id">Teacher Id</string>
     <string name="message">Message</string>
     <string name="create_a_ticket">Create A Ticket</string>
+    <string name="login">Login</string>
 </resources>

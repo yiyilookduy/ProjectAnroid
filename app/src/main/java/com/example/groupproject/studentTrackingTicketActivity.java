@@ -32,6 +32,7 @@ public class studentTrackingTicketActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student_tracking_ticket);
+        setTitle("Tracking tickets");
         username = getIntent().getStringExtra("username");
         listView = findViewById(R.id.listViewTracking);
         ticketData = new ArrayList<>();

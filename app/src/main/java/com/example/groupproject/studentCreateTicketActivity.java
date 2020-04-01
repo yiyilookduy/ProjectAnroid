@@ -21,12 +21,13 @@ public class studentCreateTicketActivity extends AppCompatActivity {
     EditText editTextTeacherId;
     EditText editTextMessageContent;
     Button buttonCreateTicket;
-    private String studentId = "";
+    private String studentId,teacherId,MessageContent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student_create_ticket);
+        setTitle("Create A Ticket");
         editTextTeacherId = findViewById(R.id.edtTeacherId);
         editTextMessageContent = findViewById(R.id.edtMessageContent);
         buttonCreateTicket = findViewById(R.id.btnSubmit);
@@ -39,21 +40,22 @@ public class studentCreateTicketActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 studentId = getIntent().getStringExtra("username");
-                String teacherId = editTextTeacherId.getText().toString().trim();
-                String MessageContent = editTextMessageContent.getText().toString().trim();
-                new PostCreateTicketToServer(studentId, teacherId,MessageContent).execute("http://171.245.197.16:8080/Ticket/CreateTicket");
+                teacherId = editTextTeacherId.getText().toString().trim();
+                MessageContent = editTextMessageContent.getText().toString().replaceAll("\\s+","%20");
+                new PostCreateTicketToServer(studentId, teacherId,MessageContent).execute("http://171.245.197.16:8080/Ticket/CreateTicket?studentId="+ studentId+"&teacherId="+teacherId+"&content="+MessageContent);
             }
         });
     }
 
     class PostCreateTicketToServer extends AsyncTask<String,Void,String>{
-        OkHttpClient okHttpClient = new OkHttpClient.Builder().build();
+        OkHttpClient okHttpClient = new OkHttpClient.Builder()
+                .build();
         String studentId,teacherId,ContentMessage;
 
-        public PostCreateTicketToServer(String studentId, String teacherId, String ContentMessage) {
+        public PostCreateTicketToServer(String studentId, String teacherId, String contentMessage) {
             this.studentId = studentId;
             this.teacherId = teacherId;
-            this.ContentMessage = ContentMessage;
+            ContentMessage = contentMessage;
         }
 
         @Override
@@ -62,7 +64,8 @@ public class studentCreateTicketActivity extends AppCompatActivity {
                     .addFormDataPart("studentId", studentId)
                     .addFormDataPart("password", teacherId)
                     .addFormDataPart("ContentMessage",ContentMessage)
-                    .setType(MultipartBody.FORM).build();
+                    .setType(MultipartBody.FORM)
+                    .build();
             Request request = new Request.Builder()
                     .url(strings[0])
                     .post(requestBody)
@@ -82,5 +85,4 @@ public class studentCreateTicketActivity extends AppCompatActivity {
             super.onPostExecute(s);
         }
     }
-
 }
