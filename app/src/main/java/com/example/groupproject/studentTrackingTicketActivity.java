@@ -36,11 +36,12 @@ public class studentTrackingTicketActivity extends AppCompatActivity {
         username = getIntent().getStringExtra("username");
         listView = findViewById(R.id.listViewTracking);
         ticketData = new ArrayList<>();
-        new GetUrl().execute("http://171.245.197.16:8080/Ticket/GetTicketByStudentId?studentId="+username);
+        new GetTrackingTicketUrl().execute("http://171.245.197.16:8080/Ticket/GetTicketByStudentId?studentId="+username);
+
 
     }
 
-    class GetUrl extends AsyncTask<String,String,String>{
+    class GetTrackingTicketUrl extends AsyncTask<String,String,String>{
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
                 .connectTimeout(15, TimeUnit.SECONDS)
                 .writeTimeout(15, TimeUnit.SECONDS)

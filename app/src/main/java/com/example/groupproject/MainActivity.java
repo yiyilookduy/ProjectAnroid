@@ -24,7 +24,6 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
-import utils.JSONManipulator;
 
 public class MainActivity extends AppCompatActivity {
     private String usernameJsonData = "";
@@ -97,25 +96,33 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String s) {
-            Log.d("JsonData",s);
-            super.onPostExecute(s);
+//            Log.d("JsonData",s);
             readJsonLoginData(s);
-            if(student!= null || teacher!= null){
-                if(student.getRoleId() == 1 && valid.userLoginValidate(user, student.getUsername(), password, student.getPassword())){
+            if(student!= null && teacher==null){
+                if(student.getRoleId() == 2 && valid.userLoginValidate(user, student.getUsername(), password, student.getPassword())){
+                    teacher=null;
                     student.setPassword("");
                     String username = student.getUsername();
                     sIntent.putExtra("username",username);
+                    edtUser.getText().clear();
+                    edtPass.getText().clear();
                     startActivity(sIntent);
-                }else if(teacher.getRoleId() == 2 && valid.userLoginValidate(user, teacher.getUsername(), password, teacher.getPassword())){
-                    student.setPassword("");
+                }
+            }else if(teacher!=null&&student==null){
+                if(teacher.getRoleId() == 3 && valid.userLoginValidate(user, teacher.getUsername(), password, teacher.getPassword())){
+                    student=null;
+                    teacher.setPassword("");
                     String username = teacher.getUsername();
                     tIntent.putExtra("username",username);
+                    edtUser.getText().clear();
+                    edtPass.getText().clear();
                     startActivity(tIntent);
                 }
-            }else{
+            } else{
                 edtUser.getText().clear();
                 edtPass.getText().clear();
             }
+            super.onPostExecute(s);
         }
 
         private void readJsonLoginData(String userData){
@@ -132,9 +139,9 @@ public class MainActivity extends AppCompatActivity {
                     roleIdJsonData = Integer.parseInt(jsonPart.getString("roleId"));
                     activeJsonData = jsonPart.getBoolean("active");
                 }
-                if (roleIdJsonData == 2){
+                if (roleIdJsonData == 3){
                     teacher = new Teacher(usernameJsonData,passwordJsonData,roleIdJsonData,activeJsonData);
-                }else if (roleIdJsonData == 1){
+                }else if (roleIdJsonData == 2){
                     student = new Student(usernameJsonData,passwordJsonData,roleIdJsonData,activeJsonData);
                 }else {
 
