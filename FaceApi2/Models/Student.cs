@@ -8,6 +8,7 @@ namespace FaceApi2.Models
         public Student()
         {
             StudentStudy = new HashSet<StudentStudy>();
+            StudentTeacherTicket = new HashSet<StudentTeacherTicket>();
         }
 
         public string Id { get; set; }
@@ -19,5 +20,6 @@ namespace FaceApi2.Models
 
         public virtual Users IdNavigation { get; set; }
         public virtual ICollection<StudentStudy> StudentStudy { get; set; }
+        public virtual ICollection<StudentTeacherTicket> StudentTeacherTicket { get; set; }
     }
 }

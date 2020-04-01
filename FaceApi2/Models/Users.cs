@@ -5,11 +5,6 @@ namespace FaceApi2.Models
 {
     public partial class Users
     {
-        public Users()
-        {
-            MappingFace = new HashSet<MappingFace>();
-        }
-
         public string Username { get; set; }
         public string Password { get; set; }
         public string Fullname { get; set; }
@@ -23,6 +18,5 @@ namespace FaceApi2.Models
         public virtual Roles Role { get; set; }
         public virtual Student Student { get; set; }
         public virtual Teacher Teacher { get; set; }
-        public virtual ICollection<MappingFace> MappingFace { get; set; }
     }
 }
