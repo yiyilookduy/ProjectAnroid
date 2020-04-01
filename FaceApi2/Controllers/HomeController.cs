@@ -16,21 +16,26 @@ namespace FaceApi2.Controllers
         {
             try
             {
-                var context = new FaceIOContext();
-                var result = context.Users.Where(q => q.Username == username && q.Password == password).FirstOrDefault();
-                if (result != null)
+                if (!string.IsNullOrEmpty(username) && !string.IsNullOrEmpty(password))
                 {
+                    var context = new FaceIOContext();
+                    var result = context.Users.Where(q => q.Username == username && q.Password == password).FirstOrDefault();
+                    if (result != null)
+                    {
 
-                    return Ok(new BaseResponse(result, "", true));
-                }
-                else
-                {
+                        return Ok(new BaseResponse(result, "", true));
+                    }
+
                     return NotFound(new BaseResponse(result, "Invalid username or password", false));
                 }
+
+                return NotFound(new BaseResponse(null, "Username and password cannot be blank", false));
+
+
             }
             catch (Exception e)
             {
-                return Ok();
+                return BadRequest(new BaseResponse(null, e.Message, false));
             }
         }
 

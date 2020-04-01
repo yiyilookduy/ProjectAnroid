@@ -12,47 +12,77 @@ namespace FaceApi2.Controllers
 {
     public class AttendanceController : Controller
     {
-
+        #region Schedule
         [HttpGet("/Attendance/GetScheduleOnCurrentWeek")]
         public IActionResult GetScheduleOnCurrentWeek(string studentId)
         {
-            var listClassSubject = GetClassSubjectByStudentId(studentId);
-
-            Dictionary<string, Object> dicClassSubjectSchedule = new Dictionary<string, object>();
-
-            DateTime ed = new DateTime(2020,03,17);
-
-            var mondayInWeek = DateTime.Now.StartOfWeek(DayOfWeek.Monday);
-
-            var sundayInWeek = mondayInWeek.AddDays(6.0);
-
-            foreach (var classSubject in listClassSubject)
+            CheckValid valid = new CheckValid();
+            try
             {
-                var ds = GetScheduleByClassSubjectId(classSubject.Id);
+                if (!valid.IsExistedStudentId(studentId))
+                    valid.IsValid = false;
 
-                var scheduleOfClassSubject = GetScheduleByClassSubjectId(classSubject.Id).Where(x => x.Date >= mondayInWeek && x.Date <= sundayInWeek).ToList();
-
-                 foreach (var schedule in scheduleOfClassSubject)
+                if (valid.IsValid)
                 {
-                    string s = $"{schedule.Date.DayOfWeek.ToString()}/{schedule.Slot}";
+                    var listClassSubject = GetClassSubjectByStudentId(studentId);
 
-                    int a = schedule.ClassSubjectSchedule.ToList()[0].Id;
-
-                    var attendance = GetAttendance(studentId, schedule.ClassSubjectSchedule.ToList()[0].Id,
-                        classSubject.Id);
-
-                    dicClassSubjectSchedule.Add(s, new
+                    if (listClassSubject.Count > 0)
                     {
-                        subject = classSubject.SubjectId,
-                        classId = classSubject.ClassId,
-                        atten = attendance.Attendance
-                    });
+                        Dictionary<string, Object> dicClassSubjectSchedule = new Dictionary<string, object>();
+
+                        var mondayInWeek = DateTime.Now.StartOfWeek(DayOfWeek.Monday);
+
+                        var sundayInWeek = mondayInWeek.AddDays(6.0);
+
+                        foreach (var classSubject in listClassSubject)
+                        {
+                            var ds = GetScheduleByClassSubjectId(classSubject.Id);
+
+                            var scheduleOfClassSubject = GetScheduleByClassSubjectId(classSubject.Id).Where(x => x.Date >= mondayInWeek && x.Date <= sundayInWeek).ToList();
+
+                            foreach (var schedule in scheduleOfClassSubject)
+                            {
+                                string s = $"{schedule.Date.DayOfWeek.ToString()}/{schedule.Slot}";
+
+                                int a = schedule.ClassSubjectSchedule.ToList()[0].Id;
+
+                                var attendance = GetAttendance(studentId, schedule.ClassSubjectSchedule.ToList()[0].Id,
+                                    classSubject.Id);
+
+                                dicClassSubjectSchedule.Add(s, new
+                                {
+                                    subject = classSubject.SubjectId,
+                                    classId = classSubject.ClassId,
+                                    atten = attendance.Attendance
+                                });
+                            }
+                        }
+
+                        if (dicClassSubjectSchedule.Count > 0)
+                        {
+                            return Ok(new BaseResponse(dicClassSubjectSchedule, "Success with schedule", true));
+                        }
+                        else
+                        {
+                            return Ok(new BaseResponse(dicClassSubjectSchedule, "Success but not have any schedule on this week", true));
+                        }
+
+                    }
+                    else
+                    {
+                        return NotFound(new BaseResponse(null, "Student is not study any subject", false));
+                    }
                 }
+
+                return NotFound(new BaseResponse(null, "Student ID not found", false));
+
+
+
             }
-
-            return Ok(new BaseResponse(dicClassSubjectSchedule, "", true));
-
-
+            catch (Exception e)
+            {
+                return BadRequest(new BaseResponse(null, e.Message, false));
+            }
         }
 
         /// <summary>
@@ -64,44 +94,75 @@ namespace FaceApi2.Controllers
         [HttpGet("/Attendance/GetScheduleOnWeek")]
         public IActionResult GetScheduleOnWeek(string studentId, DateTime date)
         {
-            var listClassSubject = GetClassSubjectByStudentId(studentId);
-
-            Dictionary<string, Object> dicClassSubjectSchedule = new Dictionary<string, object>();
-
-
-            var mondayInWeek = date.StartOfWeek(DayOfWeek.Monday);
-
-            var sundayInWeek = mondayInWeek.AddDays(6.0);
-
-            foreach (var classSubject in listClassSubject)
+            CheckValid valid = new CheckValid();
+            try
             {
-                var ds = GetScheduleByClassSubjectId(classSubject.Id);
+                if (!valid.IsExistedStudentId(studentId))
+                    valid.IsValid = false;
+                if (valid.StringIsNullOrEmpty(date.ToString()))
+                    valid.IsValid = false;
 
-                var scheduleOfClassSubject = GetScheduleByClassSubjectId(classSubject.Id).Where(x => x.Date >= mondayInWeek && x.Date <= sundayInWeek).ToList();
-
-                foreach (var schedule in scheduleOfClassSubject)
+                if (valid.IsValid)
                 {
-                    string s = $"{schedule.Date.DayOfWeek.ToString()}/{schedule.Slot}";
+                    var listClassSubject = GetClassSubjectByStudentId(studentId);
 
-                    int a = schedule.ClassSubjectSchedule.ToList()[0].Id;
-
-                    var attendance = GetAttendance(studentId, schedule.ClassSubjectSchedule.ToList()[0].Id,
-                        classSubject.Id);
-
-                    dicClassSubjectSchedule.Add(s, new
+                    if (listClassSubject != null)
                     {
-                        subject = classSubject.SubjectId,
-                        classId = classSubject.ClassId,
-                        atten = attendance.Attendance
-                    });
-                }
-            }
+                        Dictionary<string, Object> dicClassSubjectSchedule = new Dictionary<string, object>();
 
-            return Ok(new BaseResponse(dicClassSubjectSchedule, "", true));
+                        var mondayInWeek = date.StartOfWeek(DayOfWeek.Monday);
+
+                        var sundayInWeek = mondayInWeek.AddDays(6.0);
+
+                        foreach (var classSubject in listClassSubject)
+                        {
+                            var ds = GetScheduleByClassSubjectId(classSubject.Id);
+
+                            var scheduleOfClassSubject = GetScheduleByClassSubjectId(classSubject.Id).Where(x => x.Date >= mondayInWeek && x.Date <= sundayInWeek).ToList();
+
+                            foreach (var schedule in scheduleOfClassSubject)
+                            {
+                                string s = $"{schedule.Date.DayOfWeek.ToString()}/{schedule.Slot}";
+
+                                int a = schedule.ClassSubjectSchedule.ToList()[0].Id;
+
+                                var attendance = GetAttendance(studentId, schedule.ClassSubjectSchedule.ToList()[0].Id,
+                                    classSubject.Id);
+
+                                dicClassSubjectSchedule.Add(s, new
+                                {
+                                    subject = classSubject.SubjectId,
+                                    classId = classSubject.ClassId,
+                                    atten = attendance.Attendance
+                                });
+                            }
+                        }
+
+                        if (dicClassSubjectSchedule.Count > 0)
+                        {
+                            return Ok(new BaseResponse(dicClassSubjectSchedule, "Success with schedule", true));
+                        }
+
+                        return Ok(new BaseResponse(dicClassSubjectSchedule, "Success but not have any schedule on this week", true));
+
+                    }
+
+                    return NotFound(new BaseResponse(null, "Student is not study any subject", false));
+                }
+
+                return NotFound(new BaseResponse(null, valid.ErrorMessage, false));
+
+            }
+            catch (Exception e)
+            {
+                return BadRequest(new BaseResponse(null, e.Message, false));
+            }
 
 
         }
+        #endregion
 
+        #region Query in database
         /// <summary>
         /// Get subjects which studying by student
         /// </summary>
@@ -110,25 +171,35 @@ namespace FaceApi2.Controllers
         [HttpGet("/Attendance/GetStudentSubjectStudy")]
         public IActionResult GetStudentSubject(string studentId)
         {
+            CheckValid valid = new CheckValid();
             try
             {
-                var listClassSubject = GetClassSubjectByStudentId(studentId);
+                if (!valid.IsExistedStudentId(studentId))
+                    valid.IsValid = false;
+                if (valid.IsValid)
+                {
+                    var listClassSubject = GetClassSubjectByStudentId(studentId);
 
-                if (listClassSubject.Count != 0)
-                {
-                    return Ok(new BaseResponse(listClassSubject, "", true));
+                    if (listClassSubject.Count > 0)
+                    {
+                        return Ok(new BaseResponse(listClassSubject, "Get list class subject success", true));
+                    }
+                    else
+                    {
+                        return NotFound(new BaseResponse(listClassSubject, "Student havent study anything", false));
+                    }
                 }
-                else
-                {
-                    return NotFound(new BaseResponse(listClassSubject, "Student havent study anything", false));
-                }
+
+                return NotFound(new BaseResponse(null, valid.ErrorMessage, false));
+
             }
             catch (Exception e)
             {
-                return BadRequest(new BaseResponse(null, "There are some error while getting data", false));
+                return BadRequest(new BaseResponse(null, e.Message, false));
             }
         }
 
+        //TODO Check valid input
         [HttpGet("/Attendance/GetClassSubjectSchedule")]
         public IActionResult GetScheduleByClassSubject(int ClassSubjectId)
         {
@@ -138,7 +209,7 @@ namespace FaceApi2.Controllers
 
                 if (ListSchedule.Count != 0)
                 {
-                    return Ok(new BaseResponse(ListSchedule, "", true));
+                    return Ok(new BaseResponse(ListSchedule, "Get schedule by classSubject is success", true));
 
                 }
                 else
@@ -146,10 +217,11 @@ namespace FaceApi2.Controllers
             }
             catch (Exception e)
             {
-                return BadRequest(new BaseResponse(null, "There are some error while getting data", false));
+                return BadRequest(new BaseResponse(null, e.Message, false));
             }
         }
 
+        //TODO Check valid input
         [HttpGet("/Attendance/GetStudentStudyAttendance")]
         public IActionResult GetStudentStudyAttendance(string studentId, int classSubjectScheduleId, int classSubjectId)
         {
@@ -173,70 +245,89 @@ namespace FaceApi2.Controllers
                 return BadRequest(new BaseResponse(null, "There are some error while getting data", false));
             }
         }
+        #endregion
 
-
-
-        [HttpPost("/Attendance/CheckAttendance")]
-        public IActionResult CheckAttendance(string studentId, bool attendance)
+        #region Attendance
+        [HttpPost("/Attendance/UpdateAttendance")]
+        public IActionResult UpdateAttendance(string studentId, bool attendance)
         {
+            CheckValid valid = new CheckValid();
             var timeRequest = DateTime.Now;
             var slotJoin = getSlot(timeRequest);
             var check = false;
 
             try
             {
-                var listClassSubject = GetClassSubjectByStudentId(studentId);
+                if (!valid.IsExistedStudentId(studentId))
+                    valid.IsValid = false;
+                if (valid.StringIsNullOrEmpty(attendance.ToString()))
+                    valid.IsValid = false;
 
-                foreach (var classSubject in listClassSubject)
+                if (valid.IsValid)
                 {
-                    var ListSchedule = GetScheduleByClassSubjectId(classSubject.Id).Where(x => x.Date == timeRequest.Date);
-                    foreach (var schedule in ListSchedule)
+                    var listClassSubject = GetClassSubjectByStudentId(studentId);
+
+                    if (listClassSubject.Count > 0)
                     {
-                        if (schedule.Slot == slotJoin)
+                        foreach (var classSubject in listClassSubject)
                         {
-                            var context = new FaceIOContext();
-                            var classSubjectSchedule = context.ClassSubjectSchedule.Where(x =>
-                                x.ClassSubjectId == classSubject.Id && x.ScheduleId == schedule.Id).FirstOrDefault();
-
-                            var studentStudyAttendance =
-                                context.StudentStudyAttendance.Where(x =>
-                                    x.ClassSubjectScheduleId == classSubjectSchedule.Id).FirstOrDefault();
-
-                            if (studentStudyAttendance != null)
+                            var ListSchedule = GetScheduleByClassSubjectId(classSubject.Id).Where(x => x.Date == timeRequest.Date);
+                            foreach (var schedule in ListSchedule)
                             {
-                                studentStudyAttendance.Attendance = true;
+                                if (schedule.Slot == slotJoin)
+                                {
+                                    var context = new FaceIOContext();
+                                    var classSubjectSchedule = context.ClassSubjectSchedule.Where(x =>
+                                        x.ClassSubjectId == classSubject.Id && x.ScheduleId == schedule.Id).FirstOrDefault();
 
-                                context.StudentStudyAttendance.Update(studentStudyAttendance);
+                                    var studentStudyAttendance =
+                                        context.StudentStudyAttendance.Where(x =>
+                                            x.ClassSubjectScheduleId == classSubjectSchedule.Id).FirstOrDefault();
 
-                                context.SaveChanges();
+                                    if (studentStudyAttendance != null)
+                                    {
+                                        studentStudyAttendance.Attendance = true;
 
-                                check = true;
-                                break;
+                                        context.StudentStudyAttendance.Update(studentStudyAttendance);
+
+                                        context.SaveChanges();
+
+                                        check = true;
+                                        break;
+                                    }
+                                }
+
+                                else continue;
                             }
+
+                            if (check) break;
                         }
 
-                        else continue;
+                        if (check == false)
+                        {
+                            return NotFound(new BaseResponse(null, "Attendance failed", false));
+                        }
+                        else
+                        {
+                            return Ok( new BaseResponse(null, "Update attendance success", true));
+                        }
                     }
 
-                    if (check) break;
+                    return NotFound(new BaseResponse(null, "Not found any subject by student ID", false));
                 }
 
-                if (check == false)
-                {
-                    return NotFound(new BaseResponse(null, "Attendance failed", false));
-                }
-                else
-                {
-                    return Ok();
-                }
+                return NotFound(new BaseResponse(null, valid.ErrorMessage, false));
+
+
             }
             catch (Exception e)
             {
-                return BadRequest(new BaseResponse(null, "There are some error while getting data", false));
+                return BadRequest(new BaseResponse(null, e.Message, false));
             }
         }
+        #endregion
 
-
+        #region Functions
         public StudentStudyAttendance GetAttendance(string studentId, int classSubjectScheduleId,
             int classSubjectId)
         {
@@ -318,5 +409,6 @@ namespace FaceApi2.Controllers
 
             return ListSchedule;
         }
+        #endregion
     }
 }

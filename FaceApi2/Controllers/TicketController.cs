@@ -13,40 +13,51 @@ namespace FaceApi2.Controllers
         [HttpPost("/Ticket/CreateTicket")]
         public IActionResult CreateTicket(string studentId, string teacherId, string content)
         {
+            CheckValid valid = new CheckValid();
             try
             {
-                var context = new FaceIOContext();
-                var student = context.Users.Where(q => q.Username == studentId).FirstOrDefault();
-                var teacher = context.Teacher.Where(t => t.Id == teacherId).FirstOrDefault();
+                if (!valid.IsExistedTeacherId(teacherId))
+                    valid.IsValid = false;
+                if (!valid.IsExistedStudentId(studentId))
+                    valid.IsValid = false;
 
-                if (student == null || teacher == null || string.IsNullOrEmpty(content))
+                if (valid.IsValid)
                 {
-                    return NotFound(new BaseResponse(null, "Teacher or student not found or content is blank", false));
-                }
-                else
-                {
-                    context.Ticket.Add(new Ticket()
+                    var context = new FaceIOContext();
+                    var student = context.Users.Where(q => q.Username == studentId).FirstOrDefault();
+                    var teacher = context.Teacher.Where(t => t.Id == teacherId).FirstOrDefault();
+
+                    if (student == null || teacher == null || string.IsNullOrEmpty(content))
                     {
-                        Content = content,
-                        StartDate = DateTime.Now,
-                        EndDate = DateTime.Now.AddDays(10),
-                        Status = "Open"
-                    });
-
-
-                    context.SaveChanges();
-
-                    context.StudentTeacherTicket.Add(new StudentTeacherTicket()
+                        return NotFound(new BaseResponse(null, "Teacher or student not found or content is blank", false));
+                    }
+                    else
                     {
-                        StudentId =  studentId,
-                        TeacherId = teacherId,
-                        TicketId = context.Ticket.Where(t => t.Content == content).FirstOrDefault().Id
-                    });
+                        context.Ticket.Add(new Ticket()
+                        {
+                            Content = content,
+                            StartDate = DateTime.Now,
+                            EndDate = DateTime.Now.AddDays(10),
+                            Status = "Open"
+                        });
 
-                    context.SaveChanges();
+
+                        context.SaveChanges();
+
+                        context.StudentTeacherTicket.Add(new StudentTeacherTicket()
+                        {
+                            StudentId = studentId,
+                            TeacherId = teacherId,
+                            TicketId = context.Ticket.Where(t => t.Content == content).FirstOrDefault().Id
+                        });
+
+                        context.SaveChanges();
+                    }
+
+                    return Ok(new BaseResponse(null, "Create ticket success", true));
                 }
 
-                return Ok();
+                return NotFound(new BaseResponse(null, valid.ErrorMessage, false));
 
             }
             catch (Exception e)
@@ -58,15 +69,18 @@ namespace FaceApi2.Controllers
         [HttpGet("/Ticket/GetTicketByStudentId")]
         public IActionResult GetTicketByStudentId(string studentId)
         {
+            CheckValid valid = new CheckValid();
+
             try
             {
-                var context = new FaceIOContext();
-                if (string.IsNullOrEmpty(studentId))
+                if (!valid.IsExistedStudentId(studentId))
+                    valid.IsValid = false;
+
+                if (valid.IsValid)
                 {
-                    return NotFound(new BaseResponse(null, "Student ID cannot be blank", false));
-                }
-                else
-                {
+                    var context = new FaceIOContext();
+
+
                     var listIdTicket = context.StudentTeacherTicket.Where(x => x.StudentId == studentId).Select(x => x.TicketId)
                         .ToList();
 
@@ -85,13 +99,13 @@ namespace FaceApi2.Controllers
                             status = ticket.Status,
                             teacherId = context.StudentTeacherTicket.Where(x => x.TicketId == ticket.Id).FirstOrDefault()
                                 .TeacherId
-                    });
+                        });
                     }
 
                     return Ok(new BaseResponse(result, "Success", true));
                 }
 
-                return Ok();
+                return NotFound(new BaseResponse(null, valid.ErrorMessage, false));
 
             }
             catch (Exception e)
@@ -103,15 +117,17 @@ namespace FaceApi2.Controllers
         [HttpGet("/Ticket/GetTicketByTeacherId")]
         public IActionResult GetTicketByTeacherId(string teacherId)
         {
+            CheckValid valid = new CheckValid();
+
             try
             {
-                var context = new FaceIOContext();
-                if (string.IsNullOrEmpty(teacherId))
+                if (!valid.IsExistedTeacherId(teacherId))
+                    valid.IsValid = false;
+
+                if (valid.IsValid)
                 {
-                    return NotFound(new BaseResponse(null, "teacher ID cannot be blank", false));
-                }
-                else
-                {
+                    var context = new FaceIOContext();
+
                     var listIdTicket = context.StudentTeacherTicket.Where(x => x.TeacherId == teacherId).Select(x => x.TicketId)
                         .ToList();
 
@@ -136,8 +152,7 @@ namespace FaceApi2.Controllers
                     return Ok(new BaseResponse(result, "Success", true));
                 }
 
-                return Ok();
-
+                return NotFound(new BaseResponse(null, valid.ErrorMessage, false));
             }
             catch (Exception e)
             {
