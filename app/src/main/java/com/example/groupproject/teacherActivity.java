@@ -10,6 +10,13 @@ import android.widget.ImageView;
 public class teacherActivity extends AppCompatActivity {
 
     @Override
+    protected void onRestart() {
+        super.onRestart();
+        finish();
+        startActivity(getIntent());
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_teacher_page);

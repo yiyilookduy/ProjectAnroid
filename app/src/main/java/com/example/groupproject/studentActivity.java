@@ -35,4 +35,11 @@ public class studentActivity extends AppCompatActivity {
         intent.putExtra("username",username);
         startActivity(intent);
     }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        finish();
+        startActivity(getIntent());
+    }
 }

@@ -27,6 +27,13 @@ public class studentCheckAttendanceActivity extends AppCompatActivity {
     Class_Subject classSubject = new Class_Subject("1","swd","Monday",1);
 
     @Override
+    protected void onRestart() {
+        super.onRestart();
+        finish();
+        startActivity(getIntent());
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student_check_attendance);

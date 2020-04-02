@@ -29,6 +29,13 @@ public class studentTrackingTicketActivity extends AppCompatActivity {
     SimpleAdapter simpleAdapter;
 
     @Override
+    protected void onRestart() {
+        super.onRestart();
+        finish();
+        startActivity(getIntent());
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student_tracking_ticket);
@@ -37,8 +44,6 @@ public class studentTrackingTicketActivity extends AppCompatActivity {
         listView = findViewById(R.id.listViewTracking);
         ticketData = new ArrayList<>();
         new GetTrackingTicketUrl().execute("http://171.245.197.16:8080/Ticket/GetTicketByStudentId?studentId="+username);
-
-
     }
 
     class GetTrackingTicketUrl extends AsyncTask<String,String,String>{
