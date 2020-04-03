@@ -2,6 +2,7 @@ package com.example.groupproject;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,7 +15,6 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
@@ -29,7 +29,12 @@ public class studentCheckAttendanceActivity extends AppCompatActivity {
     Boolean attendance;
     List<Class_Subject> Mon,Tue,Wed,Thu,Fri;
     Class_Subject classSubject;
-    TextView txtS1M, txtS2M, txtS3M,txtS1T,txtS2T,txtS3T;
+    TextView txtS1M, txtS2M, txtS3M,txtS4M,txtS5M,txtS6M,txtS7M,txtS8M
+            ,txtS1T,txtS2T,txtS3T,txtS4T,txtS5T,txtS6T,txtS7T,txtS8T
+            ,txtS1W, txtS2W, txtS3W,txtS4W,txtS5W,txtS6W,txtS7W,txtS8W
+            ,txtS1THUR, txtS2THUR, txtS3THUR,txtS4THUR,txtS5THUR,txtS6THUR,txtS7THUR,txtS8THUR
+            ,txtS1F, txtS2F, txtS3F,txtS4F,txtS5F,txtS6F,txtS7F,txtS8F
+            ,txtS1S, txtS2S, txtS3S,txtS4S,txtS5S,txtS6S,txtS7S,txtS8S;
     Spinner weekSelector;
 
     @Override
@@ -51,35 +56,149 @@ public class studentCheckAttendanceActivity extends AppCompatActivity {
         try {
             String attendanceDataOfSpecificWeek = new getStudentAttendanceDataUrl().execute("http://171.245.197.16:8080/Attendance/GetScheduleOnWeek?studentId="+username+"&date=03%2F21%2F2020").get();
             readStudentAttendanceJSONData(attendanceDataOfSpecificWeek);
-            txtS1M.setText(Mon.get(0).getSubjectName()+"\n"+ translateAttendance(Mon.get(0).getAttendance()));
-            txtS2M.setText(Mon.get(1).getSubjectName()+"\n"+ translateAttendance(Mon.get(1).getAttendance()));
-            txtS3M.setText(Mon.get(2).getSubjectName()+"\n"+ translateAttendance(Mon.get(2).getAttendance()));
-            txtS1T.setText(Tue.get(0).getSubjectName()+"\n"+ translateAttendance(Tue.get(0).getAttendance()));
-            txtS2T.setText(Tue.get(1).getSubjectName()+"\n"+ translateAttendance(Tue.get(1).getAttendance()));
-            txtS3T.setText(Tue.get(2).getSubjectName()+"\n"+ translateAttendance(Tue.get(2).getAttendance()));
+            setTextData();
         } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }
     }
 
+    //Turn Boolean attendance data to attended and absent
     private String translateAttendance(Boolean b){
         String attendance;
         if(b==true){
-            attendance = "(attend)";
+            attendance = "(attended)";
         }else{
             attendance = "(absent)";
         }
         return attendance;
     }
 
+    //Set text data for text in table
+    private void setTextData(){
+        try {
+            //Monday
+            txtS1M.setText(Mon.get(0).getSubjectName()+"\n"+ translateAttendance(Mon.get(0).getAttendance()));
+            txtS2M.setText(Mon.get(1).getSubjectName()+"\n"+ translateAttendance(Mon.get(1).getAttendance()));
+            txtS3M.setText(Mon.get(2).getSubjectName()+"\n"+ translateAttendance(Mon.get(2).getAttendance()));
+            txtS4M.setText(Mon.get(3).getSubjectName()+"\n"+ translateAttendance(Mon.get(3).getAttendance()));
+            txtS5M.setText(Mon.get(4).getSubjectName()+"\n"+ translateAttendance(Mon.get(4).getAttendance()));
+            txtS6M.setText(Mon.get(5).getSubjectName()+"\n"+ translateAttendance(Mon.get(5).getAttendance()));
+            txtS7M.setText(Mon.get(6).getSubjectName()+"\n"+ translateAttendance(Mon.get(6).getAttendance()));
+            txtS8M.setText(Mon.get(7).getSubjectName()+"\n"+ translateAttendance(Mon.get(7).getAttendance()));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            //Tuesday
+            txtS1T.setText(Tue.get(0).getSubjectName()+"\n"+ translateAttendance(Tue.get(0).getAttendance()));
+            txtS2T.setText(Tue.get(1).getSubjectName()+"\n"+ translateAttendance(Tue.get(1).getAttendance()));
+            txtS3T.setText(Tue.get(2).getSubjectName()+"\n"+ translateAttendance(Tue.get(2).getAttendance()));
+            txtS4T.setText(Tue.get(3).getSubjectName()+"\n"+ translateAttendance(Tue.get(3).getAttendance()));
+            txtS5T.setText(Tue.get(4).getSubjectName()+"\n"+ translateAttendance(Tue.get(4).getAttendance()));
+            txtS6T.setText(Tue.get(5).getSubjectName()+"\n"+ translateAttendance(Tue.get(5).getAttendance()));
+            txtS7T.setText(Tue.get(6).getSubjectName()+"\n"+ translateAttendance(Tue.get(6).getAttendance()));
+            txtS8T.setText(Tue.get(7).getSubjectName()+"\n"+ translateAttendance(Tue.get(7).getAttendance()));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            //Wednesday
+            txtS1W.setText(Wed.get(0).getSubjectName()+"\n"+ translateAttendance(Wed.get(0).getAttendance()));
+            txtS2W.setText(Wed.get(1).getSubjectName()+"\n"+ translateAttendance(Wed.get(1).getAttendance()));
+            txtS3W.setText(Wed.get(2).getSubjectName()+"\n"+ translateAttendance(Wed.get(2).getAttendance()));
+            txtS4W.setText(Wed.get(3).getSubjectName()+"\n"+ translateAttendance(Wed.get(3).getAttendance()));
+            txtS5W.setText(Wed.get(4).getSubjectName()+"\n"+ translateAttendance(Wed.get(4).getAttendance()));
+            txtS6W.setText(Wed.get(5).getSubjectName()+"\n"+ translateAttendance(Wed.get(5).getAttendance()));
+            txtS7W.setText(Wed.get(6).getSubjectName()+"\n"+ translateAttendance(Wed.get(6).getAttendance()));
+            txtS8W.setText(Wed.get(7).getSubjectName()+"\n"+ translateAttendance(Wed.get(7).getAttendance()));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            //Thursday
+            txtS1THUR.setText(Thu.get(0).getSubjectName()+"\n"+ translateAttendance(Thu.get(0).getAttendance()));
+            txtS2THUR.setText(Thu.get(1).getSubjectName()+"\n"+ translateAttendance(Thu.get(1).getAttendance()));
+            txtS3THUR.setText(Thu.get(2).getSubjectName()+"\n"+ translateAttendance(Thu.get(2).getAttendance()));
+            txtS4THUR.setText(Thu.get(3).getSubjectName()+"\n"+ translateAttendance(Thu.get(3).getAttendance()));
+            txtS5THUR.setText(Thu.get(4).getSubjectName()+"\n"+ translateAttendance(Thu.get(4).getAttendance()));
+            txtS6THUR.setText(Thu.get(5).getSubjectName()+"\n"+ translateAttendance(Thu.get(5).getAttendance()));
+            txtS7THUR.setText(Thu.get(6).getSubjectName()+"\n"+ translateAttendance(Thu.get(6).getAttendance()));
+            txtS8THUR.setText(Thu.get(7).getSubjectName()+"\n"+ translateAttendance(Thu.get(7).getAttendance()));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            //Friday
+            txtS1F.setText(Fri.get(0).getSubjectName()+"\n"+ translateAttendance(Fri.get(0).getAttendance()));
+            txtS2F.setText(Fri.get(1).getSubjectName()+"\n"+ translateAttendance(Fri.get(1).getAttendance()));
+            txtS3F.setText(Fri.get(2).getSubjectName()+"\n"+ translateAttendance(Fri.get(2).getAttendance()));
+            txtS4F.setText(Fri.get(3).getSubjectName()+"\n"+ translateAttendance(Fri.get(3).getAttendance()));
+            txtS5F.setText(Fri.get(4).getSubjectName()+"\n"+ translateAttendance(Fri.get(4).getAttendance()));
+            txtS6F.setText(Fri.get(5).getSubjectName()+"\n"+ translateAttendance(Fri.get(5).getAttendance()));
+            txtS7F.setText(Fri.get(6).getSubjectName()+"\n"+ translateAttendance(Fri.get(6).getAttendance()));
+            txtS8F.setText(Fri.get(7).getSubjectName()+"\n"+ translateAttendance(Fri.get(7).getAttendance()));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    //find all View by Id
     private void callViewsById(){
         weekSelector = findViewById(R.id.spnWeekSelector);
+        //Monday
         txtS1M = findViewById(R.id.S1MON);
         txtS2M = findViewById(R.id.S2MON);
         txtS3M = findViewById(R.id.S3MON);
+        txtS4M = findViewById(R.id.S4MON);
+        txtS5M = findViewById(R.id.S5MON);
+        txtS6M = findViewById(R.id.S6MON);
+        txtS7M = findViewById(R.id.S7MON);
+        txtS8M = findViewById(R.id.S8MON);
+        //Tuesday
         txtS1T = findViewById(R.id.S1TUE);
         txtS2T = findViewById(R.id.S2TUE);
         txtS3T = findViewById(R.id.S3TUE);
+        txtS4T = findViewById(R.id.S4TUE);
+        txtS5T = findViewById(R.id.S5TUE);
+        txtS6T = findViewById(R.id.S6TUE);
+        txtS7T = findViewById(R.id.S7TUE);
+        txtS8T = findViewById(R.id.S8TUE);
+        //Wednesday
+        txtS1W = findViewById(R.id.S1WED);
+        txtS2W = findViewById(R.id.S2WED);
+        txtS3W = findViewById(R.id.S3WED);
+        txtS4W = findViewById(R.id.S4WED);
+        txtS5W = findViewById(R.id.S5WED);
+        txtS6W = findViewById(R.id.S6WED);
+        txtS7W = findViewById(R.id.S7WED);
+        txtS8W = findViewById(R.id.S8WED);
+        //Thursday
+        txtS1THUR = findViewById(R.id.S1THU);
+        txtS2THUR = findViewById(R.id.S2THU);
+        txtS3THUR = findViewById(R.id.S3THU);
+        txtS4THUR = findViewById(R.id.S4THU);
+        txtS5THUR = findViewById(R.id.S5THU);
+        txtS6THUR = findViewById(R.id.S6THU);
+        txtS7THUR = findViewById(R.id.S7THU);
+        txtS8THUR = findViewById(R.id.S8THU);
+        //Friday
+        txtS1F = findViewById(R.id.S1FRI);
+        txtS2F = findViewById(R.id.S2FRI);
+        txtS3F = findViewById(R.id.S3FRI);
+        txtS4F = findViewById(R.id.S4FRI);
+        txtS5F = findViewById(R.id.S5FRI);
+        txtS6F = findViewById(R.id.S6FRI);
+        txtS7F = findViewById(R.id.S7FRI);
+        txtS8F = findViewById(R.id.S8FRI);
+        //Saturday
+        txtS1S = findViewById(R.id.S1SAT);
+        txtS2S = findViewById(R.id.S2SAT);
+        txtS3S = findViewById(R.id.S3SAT);
+        txtS4S = findViewById(R.id.S4SAT);
+        txtS5S = findViewById(R.id.S5SAT);
+        txtS6S = findViewById(R.id.S6SAT);
+        txtS7S = findViewById(R.id.S7SAT);
+        txtS8S = findViewById(R.id.S8SAT);
     }
 
     private class getStudentAttendanceDataUrl extends AsyncTask<String,String,String>{
@@ -111,8 +230,8 @@ public class studentCheckAttendanceActivity extends AppCompatActivity {
         }
     }
 
+    //Read all data in Json file and transfer data to object and put object to Day list
     private void readStudentAttendanceJSONData(String s){
-        //read Json
         try {
             JSONObject JsonData = new JSONObject(s);
             String classAttendanceDataInfo = JsonData.getString("Data");
