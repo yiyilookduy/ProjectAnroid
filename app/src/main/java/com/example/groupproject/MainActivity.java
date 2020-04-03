@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -42,14 +43,17 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setTitle("School Helper");
-
         edtUser = findViewById(R.id.edtUsername);
         edtPass = findViewById(R.id.edtPassword);
         btnLogin = findViewById(R.id.btLogin);
         sIntent = new Intent(this, studentActivity.class);
         tIntent = new Intent(this, teacherActivity.class);
-
-        PostLoginEvent();
+        try {
+            PostLoginEvent();
+        } catch (Exception e) {
+            e.printStackTrace();
+            Toast.makeText(MainActivity.this,"The network is currently unavailable",Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void PostLoginEvent() {
@@ -104,8 +108,6 @@ public class MainActivity extends AppCompatActivity {
                     student.setPassword("");
                     String username = student.getUsername();
                     sIntent.putExtra("username",username);
-                    edtUser.getText().clear();
-                    edtPass.getText().clear();
                     startActivity(sIntent);
                 }
             }else if(teacher!=null&&student==null){
@@ -114,8 +116,6 @@ public class MainActivity extends AppCompatActivity {
                     teacher.setPassword("");
                     String username = teacher.getUsername();
                     tIntent.putExtra("username",username);
-                    edtUser.getText().clear();
-                    edtPass.getText().clear();
                     startActivity(tIntent);
                 }
             } else{
@@ -130,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
                 JSONObject jsonObject = new JSONObject(userData);
                 String userInfo = jsonObject.getString("Data");
                 userInfo= "["+userInfo+"]";
-                Log.i("user Data",userInfo);
+//                Log.i("user Data",userInfo);
                 JSONArray array = new JSONArray(userInfo);
                 for(int i =0;i<array.length();i++){
                     JSONObject jsonPart = array.getJSONObject(i);
