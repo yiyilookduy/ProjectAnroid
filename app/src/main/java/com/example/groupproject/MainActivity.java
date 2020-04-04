@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
     private String passwordJsonData = "";
     private int roleIdJsonData = 0;
     private Boolean activeJsonData = false;
-    private Boolean successJsonData = false;
+    private Boolean successJsonData;
     validate valid = new validate();
     Student student;
     Teacher teacher;
@@ -101,6 +101,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             readJsonLoginData(s);
+            Log.d("success",successJsonData.toString());
             if(student!= null && teacher==null){
                 if(student.getRoleId() == 2 && valid.userLoginValidate(user, student.getUsername(), password, student.getPassword())){
                     teacher=null;
@@ -121,10 +122,15 @@ public class MainActivity extends AppCompatActivity {
                     Toast toast = Toast.makeText(MainActivity.this,"Login success",Toast.LENGTH_SHORT);
                     toast.show();
                 }
-            } else{
+            }else if(!successJsonData){
                 edtUser.getText().clear();
                 edtPass.getText().clear();
                 Toast toast = Toast.makeText(MainActivity.this,"Username or password is incorrect",Toast.LENGTH_SHORT);
+                toast.show();
+            } else{
+                edtUser.getText().clear();
+                edtPass.getText().clear();
+                Toast toast = Toast.makeText(MainActivity.this,"Service unavailable",Toast.LENGTH_SHORT);
                 toast.show();
             }
             super.onPostExecute(s);
