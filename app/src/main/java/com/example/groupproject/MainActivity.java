@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     private String passwordJsonData = "";
     private int roleIdJsonData = 0;
     private Boolean activeJsonData = false;
+    private Boolean successJsonData = false;
     validate valid = new validate();
     Student student = null;
     Teacher teacher = null;
@@ -52,7 +53,6 @@ public class MainActivity extends AppCompatActivity {
             PostLoginEvent();
         } catch (Exception e) {
             e.printStackTrace();
-            Toast.makeText(MainActivity.this,"The network is currently unavailable",Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -100,7 +100,6 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String s) {
-//            Log.d("JsonData",s);
             readJsonLoginData(s);
             if(student!= null && teacher==null){
                 if(student.getRoleId() == 2 && valid.userLoginValidate(user, student.getUsername(), password, student.getPassword())){
@@ -109,6 +108,8 @@ public class MainActivity extends AppCompatActivity {
                     String username = student.getUsername();
                     sIntent.putExtra("username",username);
                     startActivity(sIntent);
+                    Toast toast = Toast.makeText(MainActivity.this,"Login success",Toast.LENGTH_SHORT);
+                    toast.show();
                 }
             }else if(teacher!=null&&student==null){
                 if(teacher.getRoleId() == 3 && valid.userLoginValidate(user, teacher.getUsername(), password, teacher.getPassword())){
@@ -117,10 +118,14 @@ public class MainActivity extends AppCompatActivity {
                     String username = teacher.getUsername();
                     tIntent.putExtra("username",username);
                     startActivity(tIntent);
+                    Toast toast = Toast.makeText(MainActivity.this,"Login success",Toast.LENGTH_SHORT);
+                    toast.show();
                 }
             } else{
                 edtUser.getText().clear();
                 edtPass.getText().clear();
+                Toast toast = Toast.makeText(MainActivity.this,"Username or password is incorrect",Toast.LENGTH_SHORT);
+                toast.show();
             }
             super.onPostExecute(s);
         }
@@ -128,9 +133,10 @@ public class MainActivity extends AppCompatActivity {
         private void readJsonLoginData(String userData){
             try {
                 JSONObject jsonObject = new JSONObject(userData);
+                JSONObject successJS = new JSONObject(userData);
                 String userInfo = jsonObject.getString("Data");
+                successJsonData = successJS.getBoolean("Success");
                 userInfo= "["+userInfo+"]";
-//                Log.i("user Data",userInfo);
                 JSONArray array = new JSONArray(userInfo);
                 for(int i =0;i<array.length();i++){
                     JSONObject jsonPart = array.getJSONObject(i);
