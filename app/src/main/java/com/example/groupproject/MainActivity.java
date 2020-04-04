@@ -33,8 +33,8 @@ public class MainActivity extends AppCompatActivity {
     private Boolean activeJsonData = false;
     private Boolean successJsonData = false;
     validate valid = new validate();
-    Student student = null;
-    Teacher teacher = null;
+    Student student;
+    Teacher teacher;
     EditText edtUser,edtPass;
     Button btnLogin;
     Intent sIntent,tIntent;
@@ -150,7 +150,8 @@ public class MainActivity extends AppCompatActivity {
                 }else if (roleIdJsonData == 2){
                     student = new Student(usernameJsonData,passwordJsonData,roleIdJsonData,activeJsonData);
                 }else {
-
+                    student = null;
+                    teacher = null;
                 }
             }catch (Exception e){
                 e.printStackTrace();
