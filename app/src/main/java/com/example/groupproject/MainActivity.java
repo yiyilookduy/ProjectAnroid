@@ -167,6 +167,8 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onRestart() {
+        student = null;
+        teacher = null;
         super.onRestart();
         finish();
         startActivity(getIntent());
