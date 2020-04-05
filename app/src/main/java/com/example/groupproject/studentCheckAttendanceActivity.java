@@ -6,6 +6,9 @@ import android.annotation.SuppressLint;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -36,6 +39,7 @@ public class studentCheckAttendanceActivity extends AppCompatActivity {
             ,txtS1F, txtS2F, txtS3F,txtS4F,txtS5F,txtS6F,txtS7F,txtS8F
             ,txtS1S, txtS2S, txtS3S,txtS4S,txtS5S,txtS6S,txtS7S,txtS8S;
     Spinner weekSelector;
+    String selectedDate;
 
     @Override
     protected void onRestart() {
@@ -53,15 +57,47 @@ public class studentCheckAttendanceActivity extends AppCompatActivity {
         Mon = new ArrayList<>();
         Tue = new ArrayList<>();
         callViewsById();
+        final ArrayList<String> date = new ArrayList<String>();
+        date.add("03/16/2020-03/22/2020");
+        date.add("03/23/2020-03/29/2020");
+        date.add("03/30/2020-04/05/2020");
+        ArrayAdapter arrayAdapter = new ArrayAdapter(this,android.R.layout.simple_spinner_item,date);
+        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        weekSelector.setAdapter(arrayAdapter);
+
+        weekSelector.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                try {
+                    clearTextData();
+                    String text = weekSelector.getSelectedItem().toString().substring(0,10).replaceAll("/","%2F");
+                    String attendanceDataOfSpecificWeek = new getStudentAttendanceDataUrl().execute("http://171.245.197.16:8080/Attendance/GetScheduleOnWeek?studentId="+username+"&date="+text).get();
+                    readStudentAttendanceJSONData(attendanceDataOfSpecificWeek);
+                    setTextData();
+                    clearDayArray();
+                } catch (ExecutionException | InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+    }
+    private void clearDayArray(){
         try {
-            String attendanceDataOfSpecificWeek = new getStudentAttendanceDataUrl().execute("http://171.245.197.16:8080/Attendance/GetScheduleOnWeek?studentId="+username+"&date=03%2F21%2F2020").get();
-            readStudentAttendanceJSONData(attendanceDataOfSpecificWeek);
-            setTextData();
-        } catch (ExecutionException | InterruptedException e) {
+            Mon.clear();
+            Tue.clear();
+            Wed.clear();
+            Thu.clear();
+            Fri.clear();
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
-
     //Turn Boolean attendance data to attended and absent
     private String translateAttendance(Boolean b){
         String attendance;
@@ -137,6 +173,74 @@ public class studentCheckAttendanceActivity extends AppCompatActivity {
             txtS6F.setText(Fri.get(5).getSubjectName()+"\n"+ translateAttendance(Fri.get(5).getAttendance()));
             txtS7F.setText(Fri.get(6).getSubjectName()+"\n"+ translateAttendance(Fri.get(6).getAttendance()));
             txtS8F.setText(Fri.get(7).getSubjectName()+"\n"+ translateAttendance(Fri.get(7).getAttendance()));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void clearTextData(){
+        try {
+            //Monday
+            txtS1M.setText("");
+            txtS2M.setText("");
+            txtS3M.setText("");
+            txtS4M.setText("");
+            txtS5M.setText("");
+            txtS6M.setText("");
+            txtS7M.setText("");
+            txtS8M.setText("");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            //Tuesday
+            txtS1T.setText("");
+            txtS2T.setText("");
+            txtS3T.setText("");
+            txtS4T.setText("");
+            txtS5T.setText("");
+            txtS6T.setText("");
+            txtS7T.setText("");
+            txtS8T.setText("");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            //Wednesday
+            txtS1W.setText("");
+            txtS2W.setText("");
+            txtS3W.setText("");
+            txtS4W.setText("");
+            txtS5W.setText("");
+            txtS6W.setText("");
+            txtS7W.setText("");
+            txtS8W.setText("");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            //Thursday
+            txtS1THUR.setText("");
+            txtS2THUR.setText("");
+            txtS3THUR.setText("");
+            txtS4THUR.setText("");
+            txtS5THUR.setText("");
+            txtS6THUR.setText("");
+            txtS7THUR.setText("");
+            txtS8THUR.setText("");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            //Friday
+            txtS1F.setText("");
+            txtS2F.setText("");
+            txtS3F.setText("");
+            txtS4F.setText("");
+            txtS5F.setText("");
+            txtS6F.setText("");
+            txtS7F.setText("");
+            txtS8F.setText("");
         } catch (Exception e) {
             e.printStackTrace();
         }
