@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -89,7 +90,9 @@ public class studentCreateTicketActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String s) {
+            Toast.makeText(studentCreateTicketActivity.this, "Success",Toast.LENGTH_SHORT).show();
             super.onPostExecute(s);
+            finish();
         }
     }
 }
