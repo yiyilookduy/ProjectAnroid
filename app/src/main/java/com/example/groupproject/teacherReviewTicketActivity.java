@@ -58,7 +58,6 @@ public class teacherReviewTicketActivity extends AppCompatActivity {
             Request.Builder builder = new Request.Builder();
             builder.url(strings[0]);
             Request request = builder.build();
-
             try {
                 Response response = okHttpClient.newCall(request).execute();
                 return response.body().string();
