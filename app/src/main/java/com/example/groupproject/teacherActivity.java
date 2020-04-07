@@ -22,18 +22,18 @@ public class teacherActivity extends AppCompatActivity {
         setContentView(R.layout.activity_teacher_page);
         setTitle("Options");
 
-        ImageView imgManageAttendance = findViewById(R.id.imgManageAttendance);
+//        ImageView imgManageAttendance = findViewById(R.id.imgManageAttendance);
         ImageView imgReviewTicket = findViewById(R.id.imgReviewTicket);
 
-        imgManageAttendance.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(teacherActivity.this, teacherManageAttendanceActivity.class);
-                String username = getIntent().getStringExtra("username");
-                intent.putExtra("username",username);
-                startActivity(intent);
-            }
-        });
+//        imgManageAttendance.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(teacherActivity.this, teacherManageAttendanceActivity.class);
+//                String username = getIntent().getStringExtra("username");
+//                intent.putExtra("username",username);
+//                startActivity(intent);
+//            }
+//        });
 
         imgReviewTicket.setOnClickListener(new View.OnClickListener() {
             @Override
