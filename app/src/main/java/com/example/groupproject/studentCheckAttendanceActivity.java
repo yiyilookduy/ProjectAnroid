@@ -2,10 +2,8 @@ package com.example.groupproject;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.annotation.SuppressLint;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -61,6 +59,7 @@ public class studentCheckAttendanceActivity extends AppCompatActivity {
         date.add("03/16/2020-03/22/2020");
         date.add("03/23/2020-03/29/2020");
         date.add("03/30/2020-04/05/2020");
+        date.add("04/06/2020-04/12/2020");
         ArrayAdapter arrayAdapter = new ArrayAdapter(this,android.R.layout.simple_spinner_item,date);
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         weekSelector.setAdapter(arrayAdapter);
@@ -343,84 +342,102 @@ public class studentCheckAttendanceActivity extends AppCompatActivity {
 
             for(int i = 1;i<=8;i++){
                 try {
-                    String M = JsonDaySlot.getString("Monday/"+i);
-                    M = "["+M+"]";
+                    String M = JsonDaySlot.getString("Monday/" + i);
+                    M = "[" + M + "]";
                     JSONArray MArray = new JSONArray(M);
-                    for(int i1 = 0;i1<MArray.length();i1++){
+                    for (int i1 = 0; i1 < MArray.length(); i1++) {
                         JSONObject jsonPart = MArray.getJSONObject(i1);
                         subject = jsonPart.getString("subject");
                         slot = i1;
                         day = "Monday";
                         attendance = jsonPart.getBoolean("atten");
-                        classSubject = new Class_Subject(subject,day,attendance,slot);
+                        classSubject = new Class_Subject(subject, day, attendance, slot);
                         Mon.add(classSubject);
                     }
-
-                    String T1 = JsonDaySlot.getString("Tuesday/"+i);
-                    T1 = "["+T1+"]";
+                }catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                try {
+                    String T1 = JsonDaySlot.getString("Tuesday/" + i);
+                    T1 = "[" + T1 + "]";
                     JSONArray T1Array = new JSONArray(T1);
-                    for(int i1 = 0;i1<T1Array.length();i1++){
+                    for (int i1 = 0; i1 < T1Array.length(); i1++) {
                         JSONObject jsonPart = T1Array.getJSONObject(i1);
                         subject = jsonPart.getString("subject");
                         slot = i1;
                         day = "Tuesday";
                         attendance = jsonPart.getBoolean("atten");
-                        classSubject = new Class_Subject(subject,day,attendance,slot);
+                        classSubject = new Class_Subject(subject, day, attendance, slot);
                         Tue.add(classSubject);
                     }
-
-                    String W1 = JsonDaySlot.getString("Wednesday/"+i);
-                    W1 = "["+W1+"]";
-                    JSONArray W1Array = new JSONArray(W1);
-                    for(int i1 = 0;i1<W1Array.length();i1++){
-                        JSONObject jsonPart = W1Array.getJSONObject(i1);
-                        subject = jsonPart.getString("subject");
-                        slot = i1;
-                        day = "Wednesday";
-                        attendance = jsonPart.getBoolean("atten");
-                        classSubject = new Class_Subject(subject,day,attendance,slot);
-                        Wed.add(classSubject);
+                }catch (Exception e) {
+                        e.printStackTrace();
                     }
-
-                    String Thursday = JsonDaySlot.getString("Thursday/"+i);
-                    Thursday = "["+Thursday+"]";
-                    JSONArray ThuArray = new JSONArray(Thursday);
-                    for(int i1 = 0;i1<ThuArray.length();i1++){
-                        JSONObject jsonPart = ThuArray.getJSONObject(i1);
-                        subject = jsonPart.getString("subject");
-                        slot = i1;
-                        day = "Thursday";
-                        attendance = jsonPart.getBoolean("atten");
-                        classSubject = new Class_Subject(subject,day,attendance,slot);
-                        Thu.add(classSubject);
-                    }
-
-                    String Friday = JsonDaySlot.getString("Friday/"+i);
-                    Friday = "["+Friday+"]";
-                    JSONArray friArray = new JSONArray(Friday);
-                    for(int i1 = 0;i1<friArray.length();i1++){
-                        JSONObject jsonPart = friArray.getJSONObject(i1);
-                        subject = jsonPart.getString("subject");
-                        slot = i1;
-                        day = "Friday";
-                        attendance = jsonPart.getBoolean("atten");
-                        classSubject = new Class_Subject(subject,day,attendance,slot);
-                        Fri.add(classSubject);
-                    }
-
-                    String Saturday = JsonDaySlot.getString("Saturday/"+i);
-                    Saturday = "["+Saturday+"]";
-                    JSONArray satArray = new JSONArray(Saturday);
-                    for(int i1 = 0;i1<satArray.length();i1++){
-                        JSONObject jsonPart = satArray.getJSONObject(i1);
-                        subject = jsonPart.getString("subject");
-                        slot = i1;
-                        day = "Saturday";
-                        attendance = jsonPart.getBoolean("atten");
-                        classSubject = new Class_Subject(subject,day,attendance,slot);
-                        Fri.add(classSubject);
-                    }
-
+                    try {
+                        String W1 = JsonDaySlot.getString("Wednesday/" + i);
+                        W1 = "[" + W1 + "]";
+                        JSONArray W1Array = new JSONArray(W1);
+                        for (int i1 = 0; i1 < W1Array.length(); i1++) {
+                            JSONObject jsonPart = W1Array.getJSONObject(i1);
+                            subject = jsonPart.getString("subject");
+                            slot = i1;
+                            day = "Wednesday";
+                            attendance = jsonPart.getBoolean("atten");
+                            classSubject = new Class_Subject(subject, day, attendance, slot);
+                            Wed.add(classSubject);
+                        }
+                    }catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    try {
+                        String Thursday = JsonDaySlot.getString("Thursday/" + i);
+                        Thursday = "[" + Thursday + "]";
+                        JSONArray ThuArray = new JSONArray(Thursday);
+                        for (int i1 = 0; i1 < ThuArray.length(); i1++) {
+                            JSONObject jsonPart = ThuArray.getJSONObject(i1);
+                            subject = jsonPart.getString("subject");
+                            slot = i1;
+                            day = "Thursday";
+                            attendance = jsonPart.getBoolean("atten");
+                            classSubject = new Class_Subject(subject, day, attendance, slot);
+                            Thu.add(classSubject);
+                        }
+                    }catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    try {
+                        String Friday = JsonDaySlot.getString("Friday/" + i);
+                        Friday = "[" + Friday + "]";
+                        JSONArray friArray = new JSONArray(Friday);
+                        for (int i1 = 0; i1 < friArray.length(); i1++) {
+                            JSONObject jsonPart = friArray.getJSONObject(i1);
+                            subject = jsonPart.getString("subject");
+                            slot = i1;
+                            day = "Friday";
+                            attendance = jsonPart.getBoolean("atten");
+                            classSubject = new Class_Subject(subject, day, attendance, slot);
+                            Fri.add(classSubject);
+                        }
+                    }catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    try {
+                        String Saturday = JsonDaySlot.getString("Saturday/" + i);
+                        Saturday = "[" + Saturday + "]";
+                        JSONArray satArray = new JSONArray(Saturday);
+                        for (int i1 = 0; i1 < satArray.length(); i1++) {
+                            JSONObject jsonPart = satArray.getJSONObject(i1);
+                            subject = jsonPart.getString("subject");
+                            slot = i1;
+                            day = "Saturday";
+                            attendance = jsonPart.getBoolean("atten");
+                            classSubject = new Class_Subject(subject, day, attendance, slot);
+                            Fri.add(classSubject);
+                        }
+                    }catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    try{
                     String Sunday = JsonDaySlot.getString("Sunday/"+i);
                     Sunday = "["+Sunday+"]";
                     JSONArray sunArray = new JSONArray(Sunday);
