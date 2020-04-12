@@ -43,7 +43,7 @@ public class studentTrackingTicketActivity extends AppCompatActivity {
         username = getIntent().getStringExtra("username");
         listView = findViewById(R.id.listViewTracking);
         ticketData = new ArrayList<>();
-        new GetTrackingTicketUrl().execute("http://115.76.119.83:8080/Ticket/GetTicketByStudentId?studentId="+username);
+        new GetTrackingTicketUrl().execute(constants.url+"/Ticket/GetTicketByStudentId?studentId="+username);
     }
 
     class GetTrackingTicketUrl extends AsyncTask<String,String,String>{

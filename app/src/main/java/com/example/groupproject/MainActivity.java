@@ -60,13 +60,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void PostLoginEvent() {
-
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String User = edtUser.getText().toString().trim();
                 String Pass = edtPass.getText().toString().trim();
-                new PostLoginToServer(User,Pass).execute("http://115.76.119.83:8080/Home/Login");
+                new PostLoginToServer(User,Pass).execute(constants.url+"/Home/Login");
             }
         });
     }
