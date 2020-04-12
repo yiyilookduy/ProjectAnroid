@@ -47,7 +47,7 @@ public class teacherEditTicketActivity extends AppCompatActivity {
                 content = getIntent().getStringExtra("content");
                 startDate = getIntent().getStringExtra("startDate");
                 endDate = getIntent().getStringExtra("endDate");
-                new PostEditTicketToServer(id, content,startDate,endDate,status).execute("http://171.245.197.16:8080/Ticket/UpdateTicket");
+                new PostEditTicketToServer(id, content,startDate,endDate,status).execute("http://115.76.119.83:8080/Ticket/UpdateTicket");
                 Toast.makeText(teacherEditTicketActivity.this,"Success",Toast.LENGTH_SHORT).show();
                 finish();
             }

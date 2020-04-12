@@ -42,7 +42,7 @@ public class teacherReviewTicketActivity extends AppCompatActivity {
         listView = findViewById(R.id.lvTeacherReviewTicket);
         ticketData = new ArrayList<>();
         allTicketData = new ArrayList<>();
-        new teacherReviewTicketActivity.GetTeacherTicketUrl().execute("http://171.245.197.16:8080/Ticket/GetTicketByTeacherId?teacherId="+username);
+        new teacherReviewTicketActivity.GetTeacherTicketUrl().execute("http://115.76.119.83:8080/Ticket/GetTicketByTeacherId?teacherId="+username);
     }
 
     class GetTeacherTicketUrl extends AsyncTask<String,String,String> {

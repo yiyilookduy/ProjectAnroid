@@ -50,7 +50,7 @@ public class studentCreateTicketActivity extends AppCompatActivity {
                 studentId = getIntent().getStringExtra("username");
                 teacherId = editTextTeacherId.getText().toString().trim();
                 MessageContent = editTextMessageContent.getText().toString().replaceAll("\\s+","%20");
-                new PostCreateTicketToServer(studentId, teacherId,MessageContent).execute("http://171.245.197.16:8080/Ticket/CreateTicket?studentId="+ studentId+"&teacherId="+teacherId+"&content="+MessageContent);
+                new PostCreateTicketToServer(studentId, teacherId,MessageContent).execute("http://115.76.119.83:8080/Ticket/CreateTicket?studentId="+ studentId+"&teacherId="+teacherId+"&content="+MessageContent);
             }
         });
     }

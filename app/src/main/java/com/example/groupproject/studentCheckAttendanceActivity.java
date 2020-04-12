@@ -70,7 +70,7 @@ public class studentCheckAttendanceActivity extends AppCompatActivity {
                 try {
                     clearTextData();
                     String text = weekSelector.getSelectedItem().toString().substring(0,10).replaceAll("/","%2F");
-                    String attendanceDataOfSpecificWeek = new getStudentAttendanceDataUrl().execute("http://171.245.197.16:8080/Attendance/GetScheduleOnWeek?studentId="+username+"&date="+text).get();
+                    String attendanceDataOfSpecificWeek = new getStudentAttendanceDataUrl().execute("http://115.76.119.83:8080/Attendance/GetScheduleOnWeek?studentId="+username+"&date="+text).get();
                     readStudentAttendanceJSONData(attendanceDataOfSpecificWeek);
                     setTextData();
                     clearDayArray();

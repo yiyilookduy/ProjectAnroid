@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String User = edtUser.getText().toString().trim();
                 String Pass = edtPass.getText().toString().trim();
-                new PostLoginToServer(User,Pass).execute("http://171.245.197.16:8080/Home/Login");
+                new PostLoginToServer(User,Pass).execute("http://115.76.119.83:8080/Home/Login");
             }
         });
     }
@@ -104,33 +104,40 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             readJsonLoginData(s);
-            Log.d("success",successJsonData.toString());
-            if(student!= null && teacher==null){
-                if(student.getRoleId() == 2 && valid.userLoginValidate(user, student.getUsername(), password, student.getPassword())){
-                    teacher=null;
-                    student.setPassword("");
-                    String username = student.getUsername();
-                    sIntent.putExtra("username",username);
-                    startActivity(sIntent);
-                    Toast toast = Toast.makeText(MainActivity.this,"Login success",Toast.LENGTH_SHORT);
+//            Log.d("success",successJsonData.toString());
+            try {
+                if(student!= null && teacher==null){
+                    if(student.getRoleId() == 2 && valid.userLoginValidate(user, student.getUsername(), password, student.getPassword())){
+                        teacher=null;
+                        student.setPassword("");
+                        String username = student.getUsername();
+                        sIntent.putExtra("username",username);
+                        startActivity(sIntent);
+                        Toast toast = Toast.makeText(MainActivity.this,"Login success",Toast.LENGTH_SHORT);
+                        toast.show();
+                    }
+                }else if(teacher!=null&&student==null){
+                    if(teacher.getRoleId() == 3 && valid.userLoginValidate(user, teacher.getUsername(), password, teacher.getPassword())){
+                        student=null;
+                        teacher.setPassword("");
+                        String username = teacher.getUsername();
+                        tIntent.putExtra("username",username);
+                        startActivity(tIntent);
+                        Toast toast = Toast.makeText(MainActivity.this,"Login success",Toast.LENGTH_SHORT);
+                        toast.show();
+                    }
+                }else if(!successJsonData){
+                    edtUser.getText().clear();
+                    edtPass.getText().clear();
+                    Toast toast = Toast.makeText(MainActivity.this,"Username or password is incorrect",Toast.LENGTH_SHORT);
+                    toast.show();
+                } else{
+                    edtUser.getText().clear();
+                    edtPass.getText().clear();
+                    Toast toast = Toast.makeText(MainActivity.this,"Service unavailable",Toast.LENGTH_SHORT);
                     toast.show();
                 }
-            }else if(teacher!=null&&student==null){
-                if(teacher.getRoleId() == 3 && valid.userLoginValidate(user, teacher.getUsername(), password, teacher.getPassword())){
-                    student=null;
-                    teacher.setPassword("");
-                    String username = teacher.getUsername();
-                    tIntent.putExtra("username",username);
-                    startActivity(tIntent);
-                    Toast toast = Toast.makeText(MainActivity.this,"Login success",Toast.LENGTH_SHORT);
-                    toast.show();
-                }
-            }else if(!successJsonData){
-                edtUser.getText().clear();
-                edtPass.getText().clear();
-                Toast toast = Toast.makeText(MainActivity.this,"Username or password is incorrect",Toast.LENGTH_SHORT);
-                toast.show();
-            } else{
+            } catch (Exception e) {
                 edtUser.getText().clear();
                 edtPass.getText().clear();
                 Toast toast = Toast.makeText(MainActivity.this,"Service unavailable",Toast.LENGTH_SHORT);
