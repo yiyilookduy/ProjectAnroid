@@ -13,8 +13,6 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity android:name=".teacherEditTicketActivity"></activity>
-        <activity android:name=".teacherEditAttendanceActivity" />
-        <activity android:name=".teacherManageAttendanceActivity" />
         <activity android:name=".teacherReviewTicketActivity" />
         <activity android:name=".studentTrackingTicketActivity" />
         <activity android:name=".studentCreateTicketActivity" />
