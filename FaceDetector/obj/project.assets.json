@@ -5119,11 +5119,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\yiyil\\Documents\\FaceDetector\\FaceDetector\\FaceDetector.csproj",
+      "projectUniqueName": "C:\\Users\\yiyil\\Documents\\CN7\\Android\\ProjectAnroid\\FaceDetector\\FaceDetector.csproj",
       "projectName": "FaceDetector",
-      "projectPath": "C:\\Users\\yiyil\\Documents\\FaceDetector\\FaceDetector\\FaceDetector.csproj",
+      "projectPath": "C:\\Users\\yiyil\\Documents\\CN7\\Android\\ProjectAnroid\\FaceDetector\\FaceDetector.csproj",
       "packagesPath": "C:\\Users\\yiyil\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\yiyil\\Documents\\FaceDetector\\FaceDetector\\obj\\",
+      "outputPath": "C:\\Users\\yiyil\\Documents\\CN7\\Android\\ProjectAnroid\\FaceDetector\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\yiyil\\AppData\\Roaming\\NuGet\\NuGet.Config",

@@ -32,15 +32,8 @@ namespace FaceDetector
                     {
                         case "1":
                             {
-                                //Console.Write("Enter FaceKey: ");
-                                //faceClient = new FaceClient(new ApiKeyServiceClientCredentials(Console.ReadLine()));
-                                //Console.Write("Enter FaceEndPoint: ");
-                                //faceClient.Endpoint = Console.ReadLine();
-
-                                faceClient = new FaceClient(new ApiKeyServiceClientCredentials("a8619b52f7764b22bbdf8b37255e0335"));
-                                faceClient.Endpoint = @"https://duy.cognitiveservices.azure.com/";
-                                //Console.Write("Enter ConnectionString: ");
-                                //storageAccount = CloudStorageAccount.Parse(Console.ReadLine());
+                                faceClient = new FaceClient(new ApiKeyServiceClientCredentials("f6e8602133a243918bc8af7e71df8856"));
+                                faceClient.Endpoint = @"https://duy1.cognitiveservices.azure.com/";
                                 Console.WriteLine("Init succeeded");
                                 break;
                             }

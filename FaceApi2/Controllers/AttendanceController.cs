@@ -325,6 +325,7 @@ namespace FaceApi2.Controllers
                 return BadRequest(new BaseResponse(null, e.Message, false));
             }
         }
+
         #endregion
 
         #region Functions
