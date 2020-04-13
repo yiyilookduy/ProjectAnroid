@@ -6,17 +6,20 @@
             <file>file:/C:/Users/yiyil/Documents/Presentation/Presentation/src/java/duypn/controllers/LoginController.java</file>
             <file>file:/C:/Users/yiyil/Documents/Presentation/Presentation/web/Attendance.jsp</file>
             <file>file:/C:/Users/yiyil/Documents/Presentation/Presentation/src/java/duypn/controllers/MainController.java</file>
-            <file>file:/C:/Users/yiyil/Documents/Presentation/Presentation/web/Login.jsp</file>
+            <file>file:/C:/Users/yiyil/Documents/Presentation/Presentation/src/java/duypn/controllers/ErrorController.java</file>
             <file>file:/C:/Users/yiyil/Documents/Presentation/Presentation/web/admin.jsp</file>
+            <file>file:/C:/Users/yiyil/Documents/Presentation/Presentation/web/WEB-INF/web.xml</file>
+            <file>file:/C:/Users/yiyil/Documents/Presentation/Presentation/web/Login.jsp</file>
+            <file>file:/C:/Users/yiyil/Documents/Presentation/Presentation/web/assets/demo/default/base/style.bundle.css</file>
+            <file>file:/C:/Users/yiyil/Documents/Presentation/Presentation/web/Shared/header.jsp</file>
             <file>file:/C:/Users/yiyil/Documents/Presentation/Presentation/web/Profile.jsp</file>
-            <file>file:/C:/Users/yiyil/Documents/Presentation/Presentation/src/java/duypn/controllers/UpdateProfileController.java</file>
-            <file>file:/C:/Users/yiyil/Documents/Presentation/Presentation/src/java/duypn/controllers/ProfileController.java</file>
             <file>file:/C:/Users/yiyil/Documents/Presentation/Presentation/src/java/duypn/classes/ActionHelper.java</file>
             <file>file:/C:/Users/yiyil/Documents/Presentation/Presentation/web/index.jsp</file>
             <file>file:/C:/Users/yiyil/Documents/Presentation/Presentation/src/java/duypn/controllers/SearchScheduleController.java</file>
+            <file>file:/C:/Users/yiyil/Documents/Presentation/Presentation/src/java/duypn/classes/HttpHelper.java</file>
+            <file>file:/C:/Users/yiyil/Documents/Presentation/Presentation/web/error.jsp</file>
             <file>file:/C:/Users/yiyil/Documents/Presentation/Presentation/src/java/duypn/controllers/AttendanceController.java</file>
             <file>file:/C:/Users/yiyil/Documents/Presentation/Presentation/src/java/duypn/classes/ApplicationContants.java</file>
-            <file>file:/C:/Users/yiyil/Documents/Presentation/Presentation/src/java/duypn/controllers/EditController.java</file>
         </group>
     </open-files>
 </project-private>

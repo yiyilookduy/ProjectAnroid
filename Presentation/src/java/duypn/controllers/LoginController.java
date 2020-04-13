@@ -48,8 +48,12 @@ public class LoginController extends HttpServlet {
             
             if (session.getAttribute("Account") == null && username != null && password != null) {
                 Map<Object, Object> data = new HashMap<>();
+                
+                
                 data.put("username", username);
                 data.put("password", password);
+                
+                
                 HttpResponse<String> res = h.sendPost(data,ApplicationContants.URLPOSTLOGIN);
 
                 JSONObject j = new JSONObject(res.body());

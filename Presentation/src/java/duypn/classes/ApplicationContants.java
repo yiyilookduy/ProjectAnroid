@@ -14,10 +14,14 @@ public class ApplicationContants {
     public static final String ADMIN = "admin.jsp";
     public static final String PAGE_ATTENDANCE = "Attendance.jsp";
     
+    //IP
+    public static final String IP = "http://171.245.197.16:8080";
+
+    
     //API Link
-    public static final String URLPOSTLOGIN = "http://171.245.197.16:8080/Home/Login";
-    public static final String URL_GET_SCHEDULE_CURRENTWEEK = "http://171.245.197.16:8080/Attendance/GetScheduleOnCurrentWeek";
-    public static final String URL_GET_SCHEDULE_ONWEEK = "http://171.245.197.16:8080/Attendance/GetScheduleOnWeek";
+    public static final String URLPOSTLOGIN = IP + "/Home/Login";
+    public static final String URL_GET_SCHEDULE_CURRENTWEEK = IP + "/GetScheduleOnCurrentWeek";
+    public static final String URL_GET_SCHEDULE_ONWEEK = IP + "/Attendance/GetScheduleOnWeek";
 
     
     //
